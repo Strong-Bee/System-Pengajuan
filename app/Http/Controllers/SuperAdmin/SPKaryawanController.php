@@ -9,7 +9,7 @@ use App\Models\Pengajuan;
 use App\Models\LogAktivitas;
 use App\Models\Notifikasi;
 
-class SuperAdminController extends Controller
+class SPKaryawanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,28 +17,13 @@ class SuperAdminController extends Controller
     public function index()
     {
         //
-        // Hitung total karyawan
-        $totalKaryawan = User::where('role', 'karyawan')->count();
-
-        // Hitung total pengajuan
-        $totalPengajuan = Pengajuan::count();
-
-        // Hitung pengajuan disetujui
-        $disetujui = Pengajuan::where('status', Pengajuan::STATUS_DISETUJUI)->count();
-
-        // Hitung pengajuan ditolak
-        $ditolak = Pengajuan::where('status', Pengajuan::STATUS_DITOLAK)->count();
-        // Data untuk view
-        $data = [
-            'title' => 'Dashboard',
-            'halaman' => 'Dashboard',
-            'totalKaryawan' => $totalKaryawan,
-            'totalPengajuan' => $totalPengajuan,
-            'disetujui' => $disetujui,
-            'ditolak' => $ditolak,
-        ];
-
-        return view('superadmin/dashboard', $data);
+        $data =
+            [
+                'halaman' => 'Karyawan',
+                'title' => 'Karyawan',
+                'karyawan' =>  User::all()
+            ];
+        return view('superadmin.karyawan', $data);
     }
 
     /**
@@ -47,6 +32,11 @@ class SuperAdminController extends Controller
     public function create()
     {
         //
+        $data = [
+            'halaman' => 'Karyawan',
+            'title' => 'Create Karyawan',
+        ];
+        return view('superadmin.karyawan.create', $data);
     }
 
     /**
@@ -71,6 +61,21 @@ class SuperAdminController extends Controller
     public function edit(string $id)
     {
         //
+        // Ambil data karyawan berdasarkan id
+        $karyawan = User::find($id);
+
+        if (!$karyawan) {
+            // Jika karyawan tidak ditemukan, redirect dengan pesan error
+            return redirect()->route('superadmin.karyawan.index')->with('error', 'Karyawan tidak ditemukan.');
+        }
+
+        $data = [
+            'halaman' => 'Karyawan',
+            'title' => 'Edit Karyawan',
+            'karyawan' => $karyawan
+        ];
+
+        return view('superadmin.karyawan.edit', $data);
     }
 
     /**

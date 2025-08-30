@@ -24,11 +24,13 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            if (Auth::user()->role === 'Admin') {
+            if (Auth::user()->role === 'Super Admin') {
+                return redirect()->route('superadmin.dashboard');
+            } else if (Auth::user()->role === 'Admin') {
                 return redirect()->route('admin.dashboard');
             }
 
-            return redirect()->route('user.dashboard');
+            return redirect()->route('karyawan.dashboard');
         }
 
         return back()->withErrors([
@@ -63,12 +65,12 @@ class AuthController extends Controller
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
-            'role'     => 'User', // default role
+            'role'     => 'Karyawan', // default role
         ]);
 
         Auth::login($user);
 
-        return redirect()->route('user.dashboard');
+        return redirect()->route('login');
     }
 
     // ===================== RESET PASSWORD =====================

@@ -3,8 +3,17 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+
 use App\Http\Controllers\Admin\AdminController;
+
 use App\Http\Controllers\SuperAdmin\SuperAdminController;
+use App\Http\Controllers\SuperAdmin\SPKaryawanController;
+use App\Http\Controllers\SuperAdmin\Pengajuan\SPPengajuanCutiController;
+use App\Http\Controllers\SuperAdmin\Pengajuan\SPPengajuanSakitController;
+use App\Http\Controllers\SuperAdmin\Pengajuan\SPPengajuanLemburController;
+use App\Http\Controllers\SuperAdmin\SPLaporanController;
+use App\Http\Controllers\SuperAdmin\SPSettingsController;
+
 use App\Http\Controllers\Karyawan\KaryawanController;
 
 // === AUTH ===
@@ -24,8 +33,26 @@ Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('
 
 
 // Super Admin
-Route::middleware(['auth', 'role:Super Admin'])->group(function () {
-    Route::get('/admin/dashboard', [SuperAdminController::class, 'index'])->name('superadmin.dashboard');
+Route::middleware(['auth', 'role:Super Admin'])->prefix('superadmin')->name('superadmin.')->group(function () {
+
+    // Dashboard
+    Route::get('/dashboard', [SuperAdminController::class, 'index'])->name('dashboard');
+
+    // Karyawan
+    Route::resource('karyawan', SPKaryawanController::class);
+
+    // Pengajuan
+    Route::prefix('pengajuan')->name('pengajuan.')->group(function () {
+        Route::get('cuti', [SPPengajuanCutiController::class, 'index'])->name('cuti');
+        Route::get('lembur', [SPPengajuanLemburController::class, 'index'])->name('lembur');
+        Route::get('sakit', [SPPengajuanSakitController::class, 'index'])->name('sakit');
+    });
+
+    // Laporan
+    Route::get('laporan', [SPLaporanController::class, 'index'])->name('laporan');
+
+    // Pengaturan
+    Route::get('settings', [SPSettingsController::class, 'index'])->name('settings');
 });
 
 // Admin
@@ -33,7 +60,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 });
 
-// User
+// Karyawan
 Route::middleware(['auth', 'role:Karyawan'])->group(function () {
-    Route::get('/user/dashboard', [KaryawanController::class, 'index'])->name('karyawan.dashboard');
+    Route::get('/karyawan/dashboard', [KaryawanController::class, 'index'])->name('karyawan.dashboard');
 });

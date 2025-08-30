@@ -9,7 +9,7 @@ use App\Models\Pengajuan;
 use App\Models\LogAktivitas;
 use App\Models\Notifikasi;
 
-class SuperAdminController extends Controller
+class SPSettingsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,28 +17,12 @@ class SuperAdminController extends Controller
     public function index()
     {
         //
-        // Hitung total karyawan
-        $totalKaryawan = User::where('role', 'karyawan')->count();
-
-        // Hitung total pengajuan
-        $totalPengajuan = Pengajuan::count();
-
-        // Hitung pengajuan disetujui
-        $disetujui = Pengajuan::where('status', Pengajuan::STATUS_DISETUJUI)->count();
-
-        // Hitung pengajuan ditolak
-        $ditolak = Pengajuan::where('status', Pengajuan::STATUS_DITOLAK)->count();
-        // Data untuk view
-        $data = [
-            'title' => 'Dashboard',
-            'halaman' => 'Dashboard',
-            'totalKaryawan' => $totalKaryawan,
-            'totalPengajuan' => $totalPengajuan,
-            'disetujui' => $disetujui,
-            'ditolak' => $ditolak,
-        ];
-
-        return view('superadmin/dashboard', $data);
+        $data =
+            [
+                'title' => 'Setting',
+                'halaman' => 'Setting',
+            ];
+        return view('superadmin.Pengaturan', $data);
     }
 
     /**
