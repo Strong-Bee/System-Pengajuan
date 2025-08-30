@@ -38,21 +38,21 @@ Sistem ini dibuat menggunakan **Laravel** untuk memudahkan karyawan mengajukan c
 
 3. Setup environment:
 
-```bash
-cp .env.example .env
-php artisan key:generate
-```
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
 
-Sesuaikan konfigurasi database pada file .env.
+    Sesuaikan konfigurasi database pada file .env.
 
 4. Jalankan migrasi dan seeder:
 
-```bash
-php artisan migrate --seed
-```
+    ```bash
+    php artisan migrate --seed
+    ```
 
 5. Jalankan server:
 
-```bash
-php artisan serve
-```
+    ```bash
+    php artisan serve
+    ```
