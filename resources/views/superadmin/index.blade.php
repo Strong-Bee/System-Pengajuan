@@ -27,7 +27,6 @@
             <div class="container-fluid py-2">
                 <div class="app-header-content">
                     <div class="row justify-content-between align-items-center">
-
                         <div class="col-auto">
                             <a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
@@ -171,7 +170,7 @@
                             <div class="app-utility-item app-user-dropdown dropdown">
                                 <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown"
                                     href="#" role="button" aria-expanded="false"><img
-                                        src="assets/images/user.png" alt="user profile"></a>
+                                        src="{{ asset('assets/images/user.png') }}" alt="user profile"></a>
                                 <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
                                     <li><a class="dropdown-item" href="account.html">Account</a></li>
                                     <li><a class="dropdown-item" href="settings.html">Settings</a></li>
@@ -192,7 +191,8 @@
                 <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
                 <div class="app-branding">
                     <a class="app-logo" href="index.html"><img class="logo-icon me-2"
-                            src="assets/images/app-logo.svg" alt="logo"><span class="logo-text">PORTAL</span></a>
+                            src="{{ asset('assets/images/app-logo.svg') }}" alt="logo"><span
+                            class="logo-text">PORTAL</span></a>
                 </div>
                 <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
                     <ul class="app-menu list-unstyled accordion" id="menu-accordion">
