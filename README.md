@@ -22,17 +22,19 @@ Sistem ini dibuat menggunakan **Laravel** untuk memudahkan karyawan mengajukan c
 ## Instalasi
 
 1. Clone repository:
+
    ```bash
    git clone https://github.com/username/sistem-pengajuan.git
    cd sistem-pengajuan
+    ```
 
 2. Install dependencies:
 
-```bash
-composer install
-npm install
-npm run dev
-```
+    ```bash
+    composer install
+    npm install
+    npm run dev
+    ```
 
 3. Setup environment:
 
