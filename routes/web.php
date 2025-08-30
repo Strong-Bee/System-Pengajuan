@@ -1,29 +1,39 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
 
-Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
-    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [LoginController::class, 'login'])->name('login.submit');
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-});
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\SuperAdmin\SuperAdminController;
+use App\Http\Controllers\Karyawan\KaryawanController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// === AUTH ===
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// === REGISTER ===
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+
+// === RESET PASSWORD ===
+Route::get('/password/reset', [AuthController::class, 'showResetForm'])->name('password.request');
+Route::post('/password/email', [AuthController::class, 'sendResetLink'])->name('password.email');
+Route::get('/password/reset/{token}', [AuthController::class, 'showNewPasswordForm'])->name('password.reset');
+Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.update');
+
 
 // Super Admin
 Route::middleware(['auth', 'role:Super Admin'])->group(function () {
-    Route::get('superadmin/dashboard', fn() => view('superadmin.dashboard'))->name('superadmin.dashboard');
+    Route::get('/admin/dashboard', [SuperAdminController::class, 'index'])->name('superadmin.dashboard');
 });
 
 // Admin
 Route::middleware(['auth', 'role:Admin'])->group(function () {
-    Route::get('admin/dashboard', fn() => view('admin.dashboard'))->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 });
 
-// Karyawan
+// User
 Route::middleware(['auth', 'role:Karyawan'])->group(function () {
-    Route::get('karyawan/dashboard', fn() => view('karyawan.dashboard'))->name('karyawan.dashboard');
+    Route::get('/user/dashboard', [KaryawanController::class, 'index'])->name('karyawan.dashboard');
 });
